@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+                #title {
+        text-align: center;
+        background-color: #4b1442; /* Cambia el color de fondo al que desees */
+        color: #fff; /* Cambia el color del texto al que desees */
+        padding: 10px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+        margin: 0;
+        font-size: 24px;
+        }
+
+
+        </style>
+        <title>**SANTIAGO DE CALI - ESCUELAS COMUNA 6**</title>
+    </head>
+    <body>
+        <div id="title">
+            <h1>INSTITUCIONES EDUCATIVAS OFICIALES</h1>
+            <h1>COMUNA 6 - CALI </h1>
+          </div>
+          <div id="map">
+          </div>
+          
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/manzana_c6_1.js"></script>
+        <script src="data/vias_cali_2.js"></script>
+        <script src="data/Estacion_MIO_3.js"></script>
+        <script src="data/colegio_c6_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:20, minZoom:10
+        }).fitBounds([[3.4594112685292604,-76.52828590214705],[3.505318986304321,-76.4469426340302]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            map.setMaxBounds(map.getBounds());
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 10,
+            maxZoom: 20,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_manzana_c6_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">barrio</th>\
+                        <td>' + (feature.properties['barrio'] !== null ? autolinker.link(feature.properties['barrio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['manzana'] !== null ? autolinker.link(feature.properties['manzana'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_manzana_c6_1_0() {
+            return {
+                pane: 'pane_manzana_c6_1',
+                opacity: 1,
+                color: 'rgba(7,32,6,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(117,219,61,0.7607843137254902)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_manzana_c6_1');
+        map.getPane('pane_manzana_c6_1').style.zIndex = 401;
+        map.getPane('pane_manzana_c6_1').style['mix-blend-mode'] = 'normal';
+        var layer_manzana_c6_1 = new L.geoJson(json_manzana_c6_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_manzana_c6_1',
+            layerName: 'layer_manzana_c6_1',
+            pane: 'pane_manzana_c6_1',
+            onEachFeature: pop_manzana_c6_1,
+            style: style_manzana_c6_1_0,
+        });
+        bounds_group.addLayer(layer_manzana_c6_1);
+        map.addLayer(layer_manzana_c6_1);
+        function pop_vias_cali_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['tipo_via'] !== null ? autolinker.link(feature.properties['tipo_via'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_vias_cali_2_0() {
+            return {
+                pane: 'pane_vias_cali_2',
+                opacity: 1,
+                color: 'rgba(242,208,208,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_vias_cali_2');
+        map.getPane('pane_vias_cali_2').style.zIndex = 402;
+        map.getPane('pane_vias_cali_2').style['mix-blend-mode'] = 'normal';
+        var layer_vias_cali_2 = new L.geoJson(json_vias_cali_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_vias_cali_2',
+            layerName: 'layer_vias_cali_2',
+            pane: 'pane_vias_cali_2',
+            onEachFeature: pop_vias_cali_2,
+            style: style_vias_cali_2_0,
+        });
+        bounds_group.addLayer(layer_vias_cali_2);
+        map.addLayer(layer_vias_cali_2);
+        function pop_Estacion_MIO_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['t_estacion'] !== null ? autolinker.link(feature.properties['t_estacion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">nombre</th>\
+                        <td>' + (feature.properties['nombre'] !== null ? autolinker.link(feature.properties['nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">direccion</th>\
+                        <td>' + (feature.properties['direccion'] !== null ? autolinker.link(feature.properties['direccion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">corredor</th>\
+                        <td>' + (feature.properties['corredor'] !== null ? autolinker.link(feature.properties['corredor'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Estacion_MIO_3_0() {
+            return {
+                pane: 'pane_Estacion_MIO_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,17,122,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Estacion_MIO_3');
+        map.getPane('pane_Estacion_MIO_3').style.zIndex = 403;
+        map.getPane('pane_Estacion_MIO_3').style['mix-blend-mode'] = 'normal';
+        var layer_Estacion_MIO_3 = new L.geoJson(json_Estacion_MIO_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Estacion_MIO_3',
+            layerName: 'layer_Estacion_MIO_3',
+            pane: 'pane_Estacion_MIO_3',
+            onEachFeature: pop_Estacion_MIO_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Estacion_MIO_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Estacion_MIO_3);
+        map.addLayer(layer_Estacion_MIO_3);
+        function pop_colegio_c6_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">nombre_sed</th>\
+                        <td>' + (feature.properties['nombre_sed'] !== null ? autolinker.link(feature.properties['nombre_sed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">direccion</th>\
+                        <td>' + (feature.properties['direccion'] !== null ? autolinker.link(feature.properties['direccion'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_colegio_c6_4_0() {
+            return {
+                pane: 'pane_colegio_c6_4',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,222,44,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_colegio_c6_4');
+        map.getPane('pane_colegio_c6_4').style.zIndex = 404;
+        map.getPane('pane_colegio_c6_4').style['mix-blend-mode'] = 'normal';
+        var layer_colegio_c6_4 = new L.geoJson(json_colegio_c6_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_colegio_c6_4',
+            layerName: 'layer_colegio_c6_4',
+            pane: 'pane_colegio_c6_4',
+            onEachFeature: pop_colegio_c6_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_colegio_c6_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_colegio_c6_4);
+        map.addLayer(layer_colegio_c6_4);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/colegio_c6_4.png" /> colegio_c6': layer_colegio_c6_4,'<img src="legend/Estacion_MIO_3.png" /> Estacion_MIO': layer_Estacion_MIO_3,'<img src="legend/vias_cali_2.png" /> vias_cali': layer_vias_cali_2,'<img src="legend/manzana_c6_1.png" /> manzana_c6': layer_manzana_c6_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
